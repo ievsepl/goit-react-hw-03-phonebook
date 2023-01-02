@@ -18,15 +18,11 @@ export class App extends Component {
   };
 
   onSubmitForm = data => {
-    console.log(data.name);
+    // console.log(data.name);
     data.id = nanoid();
-    // if (this.state.contacts.every(contact => contact.name !== data.name)) {
     this.setState(prev => {
       return { contacts: [...prev.contacts, data] };
     });
-    // } else {
-    // alert(`${data.name} is already in your contacts`);
-    // }
   };
 
   onFilterForm = e => {
@@ -45,6 +41,26 @@ export class App extends Component {
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
+
+  componentDidMount() {
+    // console.log(this.state.contacts);
+    const localStorageStateContacts = JSON.parse(
+      localStorage.getItem('contacts')
+    );
+    console.log(localStorageStateContacts);
+    if (localStorageStateContacts) {
+      this.setState({ contacts: localStorageStateContacts });
+    } else {
+      this.setState({ contacts: [] });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+      // console.log(prevState.contacts, this.state.contacts);
+    }
+  }
 
   render() {
     const {
