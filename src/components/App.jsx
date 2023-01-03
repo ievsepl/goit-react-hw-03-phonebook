@@ -50,8 +50,6 @@ export class App extends Component {
     console.log(localStorageStateContacts);
     if (localStorageStateContacts) {
       this.setState({ contacts: localStorageStateContacts });
-    } else {
-      this.setState({ contacts: [] });
     }
   }
 
