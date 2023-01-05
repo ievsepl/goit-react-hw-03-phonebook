@@ -48,13 +48,18 @@ export class App extends Component {
       localStorage.getItem('contacts')
     );
     console.log(localStorageStateContacts);
-    if (localStorageStateContacts) {
-      this.setState({ contacts: localStorageStateContacts });
-    }
+    const contactList = localStorageStateContacts || this.state.contacts;
+    this.setState({ contacts: contactList });
+    // if (localStorageStateContacts) {
+    //   this.setState({ contacts: localStorageStateContacts });
+    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
+    if (
+      this.state.contacts.length !== prevState.contacts.length &&
+      prevState.contacts.length !== 0
+    ) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
       // console.log(prevState.contacts, this.state.contacts);
     }
